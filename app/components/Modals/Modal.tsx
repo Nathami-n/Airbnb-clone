@@ -1,7 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useState } from "react";
-import {IoMdClose} from 'react-icons/io'
+import { IoMdClose } from 'react-icons/io'
 import { CustomButton } from "..";
 
 interface ModalProps {
@@ -14,7 +14,7 @@ interface ModalProps {
     actionLabel: string;
     disabled?: boolean;
     secondaryAction?: () => void;
-    secondaryLabel?: string;
+    secondaryActionLabel?: string;
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -27,37 +27,37 @@ const Modal: React.FC<ModalProps> = ({
     actionLabel,
     disabled,
     secondaryAction,
-    secondaryLabel
+    secondaryActionLabel
 
 }) => {
     const [showModal, setShowModal] = useState(isOpen);
 
-    useEffect(()=>{
+    useEffect(() => {
         setShowModal(isOpen)
     }, [isOpen])
 
-    const handleClose = useCallback(()=> {
-        if(disabled){
+    const handleClose = useCallback(() => {
+        if (disabled) {
             return
         };
-        
+
         setShowModal(false);
-        
-        setTimeout(()=> {
+
+        setTimeout(() => {
             onClose();
         }, 300)
 
     }, [disabled, onClose]);
 
-    const handleSubmit = useCallback(()=> {
-        if(disabled) {
+    const handleSubmit = useCallback(() => {
+        if (disabled) {
             return;
         };
         onSubmit();
     }, [disabled, onSubmit]);
 
-    const handleSecondaryAction = useCallback(()=>{
-        if(disabled || !secondaryAction) {
+    const handleSecondaryAction = useCallback(() => {
+        if (disabled || !secondaryAction) {
             return
         };
 
@@ -65,15 +65,15 @@ const Modal: React.FC<ModalProps> = ({
 
     }, [disabled, secondaryAction])
 
-    if(!isOpen) {
+    if (!isOpen) {
         return null;
     }
 
 
     return (
         <>
-        <div
-        className="
+            <div
+                className="
         justify-center
         items-center
         flex
@@ -86,9 +86,9 @@ const Modal: React.FC<ModalProps> = ({
         focus:outline-none
         bg-neutral-800/70
         "
-        >
-            <div 
-            className="
+            >
+                <div
+                    className="
                 relative
                 w-full
                 md:w-4/6
@@ -100,18 +100,18 @@ const Modal: React.FC<ModalProps> = ({
                 lg:h-auto
                 md:h-auto
             ">
-                {/* content */}
-                <div
-                className={`
+                    {/* content */}
+                    <div
+                        className={`
                 translate
                 duration-300
                 h-full
-                ${showModal ? 'translate-y-0': 'translate-y-full'}
-                ${showModal ? 'opacity-100': 'opacity-0'}
+                ${showModal ? 'translate-y-0' : 'translate-y-full'}
+                ${showModal ? 'opacity-100' : 'opacity-0'}
                 `}
-                >
-                    <div
-                    className="
+                    >
+                        <div
+                            className="
                     translate
                     h-full
                     lg:h-auto
@@ -126,10 +126,10 @@ const Modal: React.FC<ModalProps> = ({
                     outline-none
                     focus:outline-none
                     "
-                    >
-                        {/* CONTENT HEADER */}
-                        <div
-                        className="
+                        >
+                            {/* CONTENT HEADER */}
+                            <div
+                                className="
                         flex
                         items-center
                         p-6
@@ -138,10 +138,10 @@ const Modal: React.FC<ModalProps> = ({
                         relative
                         border-b-[1px]
                         "
-                        >
-                            <button
-                            onClick={handleClose}
-                            className="
+                            >
+                                <button
+                                    onClick={handleClose}
+                                    className="
                             p-1
                             border-0
                             hover:opacity-70
@@ -149,54 +149,66 @@ const Modal: React.FC<ModalProps> = ({
                             absolute
                             left-9
                             "
-                            >
-                                <IoMdClose size={18}/>
-                            </button>
-                            <div
-                            className="
+                                >
+                                    <IoMdClose size={18} />
+                                </button>
+                                <div
+                                    className="
                             text-lg
                             font-semibold
-                            " 
-                            >
-                                {title}
+                            "
+                                >
+                                    {title}
+                                </div>
                             </div>
-                        </div>
-                        {/* CONTENT BODY */}
-                        <div
-                        className="
+                            {/* CONTENT BODY */}
+                            <div
+                                className="
                         relative
                         p-6
                         flex-auto
 
                         "
-                        >
-                            {body}
-                        </div>
-                        {/* CONTENT FOOTER */}
-                        <div 
-                        className="
+                            >
+                                {body}
+                            </div>
+                            {/* CONTENT FOOTER */}
+                            <div
+                                className="
                         flex 
                         flex-col 
                         gap-2
                         p-6
                         ">
-                            <div
-                            className="
+                                <div
+                                    className="
                             flex
                             flex-row
                             items-center
                             gap-4
                             w-full
                             "
-                            >
-                                <CustomButton label='nate'/>
+                                >
+                                    {secondaryAction && secondaryActionLabel && (
+                                        <CustomButton
+                                        outline
+                                           disabled={disabled}
+                                           label={secondaryActionLabel}
+                                           onClick={handleSecondaryAction}
+                                       />
+                                    )}
+                                    <CustomButton
+                                        disabled={disabled}
+                                        label={actionLabel}
+                                        onClick={handleSubmit}
+                                    />
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-        </div>
+            </div>
         </>
     )
 }
