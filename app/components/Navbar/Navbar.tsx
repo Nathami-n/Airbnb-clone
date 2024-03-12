@@ -1,3 +1,4 @@
+'use client'
 import { AirLogo, Container, Search, UserMenu } from ".."
 function Navbar() {
   return (
