@@ -1,28 +1,31 @@
-import { AirLogo, Container } from ".."
+import { AirLogo, Container, Search, UserMenu } from ".."
 function Navbar() {
   return (
     <div className="fixed w-full bg-white z-10 shadow-sm ">
-     <div 
-     className="
+      <div
+      className="
      py-4
      border-b-[1px]
      "
-     >
-      <Container>
-        <div
+      >
+        <Container>
+          <div
         className="
         flex
         flex-row
         justify-between
+        items-center
         gap-3
         md:gap-0
         "
-        >
-          <AirLogo/>
+          >
+            <AirLogo />
+            <Search />
+            <UserMenu/>
 
-        </div>
-      </Container>
-     </div>
+          </div>
+        </Container>
+      </div>
     </div>
   )
 }
