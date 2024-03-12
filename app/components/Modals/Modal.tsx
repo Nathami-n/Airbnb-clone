@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import {IoMdClose} from 'react-icons/io'
+import { CustomButton } from "..";
 
 interface ModalProps {
     isOpen?: boolean;
@@ -157,10 +158,40 @@ const Modal: React.FC<ModalProps> = ({
                             font-semibold
                             " 
                             >
-                                Login Modal
+                                {title}
                             </div>
                         </div>
+                        {/* CONTENT BODY */}
+                        <div
+                        className="
+                        relative
+                        p-6
+                        flex-auto
 
+                        "
+                        >
+                            {body}
+                        </div>
+                        {/* CONTENT FOOTER */}
+                        <div 
+                        className="
+                        flex 
+                        flex-col 
+                        gap-2
+                        p-6
+                        ">
+                            <div
+                            className="
+                            flex
+                            flex-row
+                            items-center
+                            gap-4
+                            w-full
+                            "
+                            >
+                                <CustomButton/>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
