@@ -189,7 +189,7 @@ const Modal: React.FC<ModalProps> = ({
                             w-full
                             "
                             >
-                                <CustomButton/>
+                                <CustomButton label='nate'/>
                             </div>
                         </div>
                     </div>
