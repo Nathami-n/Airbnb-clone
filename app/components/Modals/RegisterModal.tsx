@@ -9,7 +9,8 @@ import {
   useForm
 } from 'react-hook-form'
 import useRegisterModal from '@app/hooks/useRegisterModal'
-import { Heading, Modal, Input } from '..';
+import { Heading, Modal, Input, CustomButton } from '..';
+import toast from 'react-hot-toast';
 
 const RegisterModal = () => {
   const registerModal = useRegisterModal();
@@ -37,7 +38,7 @@ const RegisterModal = () => {
         registerModal.onClose();
       })
       .catch((error) => {
-        console.log(error);
+        toast.error('Something went wrong')
       })
       .finally(() => {
         setIsLoading(false);
@@ -58,7 +59,41 @@ const RegisterModal = () => {
   register={register}
   required
   />
+  <Input 
+  id='name'
+  label='Name'
+  disabled={isLoading}
+  errors={errors}
+  register={register}
+  required
+  />
+  <Input 
+  id='password'
+  label='Password'
+  type='password'
+  disabled={isLoading}
+  errors={errors}
+  register={register}
+  required
+  />
   </div>)
+
+  const footerContent = (
+    <div className='
+    flex
+    flex-col
+    gap-4
+    mt-3
+    '>
+      <hr/>
+      <CustomButton
+      outline
+      label='Continue with Google'
+      icon={FcGoogle}
+      
+      />
+    </div>
+  )
   return (
     <Modal
       disabled={isLoading}
@@ -68,6 +103,7 @@ const RegisterModal = () => {
       onClose={registerModal.onClose}
       onSubmit={handleSubmit(onSubmit)}
       body={bodyContent}
+      footer={footerContent}
 
     />
   )
