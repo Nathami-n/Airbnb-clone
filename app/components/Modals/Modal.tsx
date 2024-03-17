@@ -2,6 +2,8 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
+
+import Button from "../Button";
 import { CustomButton } from "..";
 
 interface ModalProps {
