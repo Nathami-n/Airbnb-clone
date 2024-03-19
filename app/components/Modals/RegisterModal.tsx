@@ -95,7 +95,7 @@ const RegisterModal = () => {
       <CustomButton
       outline
       label='Continue with Github'
-      icon={AiFillGithub}
+      icon={AiFillGithub} 
       onClick={()=> {}}
       />
       <div className='
