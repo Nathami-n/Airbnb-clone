@@ -3,17 +3,23 @@ import axios from 'axios';
 import { AiFillGithub } from 'react-icons/ai';
 import { FcGoogle } from 'react-icons/fc';
 import { useCallback, useState } from 'react';
+import {signIn} from 'next-auth/react'
 import {
   FieldValues,
   SubmitHandler,
   useForm
 } from 'react-hook-form'
+import useRegisterModal from '@app/hooks/useRegisterModal'
 import useLoginModal from '@app/hooks/useLoginModal'
 import { Heading, Modal, Input, CustomButton } from '..';
 import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 const LoginModal = () => {
+    const router = useRouter();
+  const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
+
   const [isLoading, setIsLoading] = useState(false);
   const {
     register,
@@ -24,7 +30,6 @@ const LoginModal = () => {
     }
   } = useForm<FieldValues>({
     defaultValues: {
-      name: '',
       email: '',
       password: ''
     }
@@ -33,31 +38,28 @@ const LoginModal = () => {
   const onSubmit: SubmitHandler<FieldValues> =  async (data) => {
     setIsLoading(true);
     try {
-      const user = await axios.post('/api/register/', data);
-      if(user) toast.success('User registration successful')
-      registerModal.onClose();
+      const success =  await signIn('credentials',{...data, redirect: false});
+      if(success){ 
+        toast.success("logged in");
+        router.refresh()
+        loginModal.onClose();
+    }
+
     } catch(error) {
       toast.error('Something went wrong')
+      loginModal.onClose();
     }
     setIsLoading(false)
   }
 
   const bodyContent = (<div className='flex flex-col gap-4'> 
   <Heading 
-  title='Welcome to Airbnb'
-  subtitle='Create an account'
+  title='Welcome Back'
+  subtitle='Login to your Account'
   />
   <Input 
   id='email'
   label='Email'
-  disabled={isLoading}
-  errors={errors}
-  register={register}
-  required
-  />
-  <Input 
-  id='name'
-  label='Name'
   disabled={isLoading}
   errors={errors}
   register={register}
@@ -126,10 +128,10 @@ const LoginModal = () => {
   return (
     <Modal
       disabled={isLoading}
-      isOpen={registerModal.isOpen}
-      title='Register'
+      isOpen={loginModal.isOpen}
+      title='Login'
       actionLabel='Continue'
-      onClose={registerModal.onClose}
+      onClose={loginModal.onClose}
       onSubmit={handleSubmit(onSubmit)}
       body={bodyContent}
       footer={footerContent}
