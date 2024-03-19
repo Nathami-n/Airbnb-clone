@@ -4,7 +4,15 @@ import { Avatar, LoginModal, MenuItem } from ".."
 import { useCallback, useState } from "react"
 import useRegisterModal from "@app/hooks/useRegisterModal"
 import useLoginModal from "@app/hooks/useLoginModal"
-const UserMenu = () => {
+import { User } from "@prisma/client"
+import { signOut } from "next-auth/react"
+
+interface UserMenuProps {
+    currentUser: User
+}
+const UserMenu: React.FC<UserMenuProps> = ({
+    currentUser
+}) => {
     const registerModal = useRegisterModal()
     const loginModal = useLoginModal();
     const [isOpen, setIsOpen] = useState(false);
@@ -59,8 +67,8 @@ const UserMenu = () => {
                 </div>
             </div>
             {isOpen && (
-            <div 
-            className="
+                <div
+                    className="
             absolute
             rounded-xl
             shadow-md
@@ -72,20 +80,56 @@ const UserMenu = () => {
             top-12
             text-sm
             ">
-                <div className="flex flex-col cursor-pointer">
-                <>
-                <MenuItem
-                onClick={loginModal.onOpen}
-                label="login"
-                />
-                <MenuItem
-                onClick={registerModal.onOpen}
-                
-                label="Sign up"
-                />
-                </>
+                    <div className="flex flex-col cursor-pointer">
+                        {currentUser ? (
+                            <>
+                                <MenuItem
+                                    onClick={() => { }}
+                                    label="My trips"
+                                />
+                                <MenuItem
+                                    onClick={() => { }}
+
+                                    label="My favorites"
+                                />
+                                <MenuItem
+                                    onClick={() => { }}
+
+                                    label="My reservations"
+                                />
+                                <MenuItem
+                                    onClick={() => { }}
+
+                                    label="My properties"
+                                />
+                                <MenuItem
+                                    onClick={() => { }}
+
+                                    label="Airbnb my home"
+                                />
+                                <hr />
+                                <MenuItem
+                                    onClick={() => signOut()}
+
+                                    label="Sign-out"
+                                />
+                            </>
+
+                        ) : (
+                            <>
+                                <MenuItem
+                                    onClick={loginModal.onOpen}
+                                    label="login"
+                                />
+                                <MenuItem
+                                    onClick={registerModal.onOpen}
+
+                                    label="Sign up"
+                                />
+                            </>)}
+                    </div>
                 </div>
-            </div>)}
+            )}
         </div>
     )
 }
