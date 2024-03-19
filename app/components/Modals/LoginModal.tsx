@@ -8,12 +8,12 @@ import {
   SubmitHandler,
   useForm
 } from 'react-hook-form'
-import useRegisterModal from '@app/hooks/useRegisterModal'
+import useLoginModal from '@app/hooks/useLoginModal'
 import { Heading, Modal, Input, CustomButton } from '..';
 import toast from 'react-hot-toast';
 
-const RegisterModal = () => {
-  const registerModal = useRegisterModal();
+const LoginModal = () => {
+  const loginModal = useLoginModal();
   const [isLoading, setIsLoading] = useState(false);
   const {
     register,
@@ -138,4 +138,4 @@ const RegisterModal = () => {
   )
 }
 
-export default RegisterModal
+export default LoginModal
